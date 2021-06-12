@@ -80,6 +80,10 @@ const htmlInclude = () => {
 // Html Build //
 const htmlMinify = () => {
 	return src('./src/pages/**/*.html')
+    .pipe(fileinclude({
+      prefix: '@',
+      basepath: '@file'
+    }))
 		.pipe(htmlmin({
 			collapseWhitespace: true
 		}))
@@ -94,7 +98,9 @@ const scripts = () => {
 		.pipe(dest('./app/js/'))
   return src([
     './src/js/main.js',
-    './src/blocks/_blocks.js'
+    './src/blocks/_blocks.js',
+    './src/blocks/modules/**/*.js',
+    './src/blocks/components/**/*.js'
   ])
     .pipe(webpackStream({
       output: {
@@ -132,7 +138,9 @@ const scriptsBackend = () => {
 		.pipe(dest('./app/js/'))
   return src([
     './src/js/main.js',
-    './src/blocks/_blocks.js'
+    './src/blocks/_blocks.js',
+    './src/blocks/modules/**/*.js',
+    './src/blocks/components/**/*.js'
   ])
     .pipe(webpackStream({
       output: {
@@ -167,7 +175,9 @@ const scriptsBuild = () => {
 		.pipe(dest('./app/js/'))
   return src([
     './src/js/main.js',
-    './src/blocks/_blocks.js'
+    './src/blocks/_blocks.js',
+    './src/blocks/modules/**/*.js',
+    './src/blocks/components/**/*.js'
   ])
     .pipe(webpackStream({
       output: {
@@ -254,11 +264,11 @@ const watchFiles = () => {
     }
   });
 
-  watch(['./src/scss/**/*.scss', './src/blocks/_blocks.scss'], styles);
-  watch('./src/pages/*.html', htmlInclude);
+  watch(['./src/scss/**/*.scss', './src/blocks/_blocks.scss', './src/blocks/**/*.scss'], styles);
+  watch(['./src/pages/*.html', './src/blocks/**/*.html'], htmlInclude);
   watch('./src/img/**/*.{jpg, png, webp, ico, gif, jpeg, svg}', imgToApp);
   watch('./src/fonts/**.ttf', fonts);
-  watch(['./src/js/main.js', './src/js/vendor.js', './src/blocks/_blocks.js'], scripts);
+  watch(['./src/js/main.js', './src/js/vendor.js', './src/blocks/_blocks.js', './src/blocks/components/**/*.js', './src/blocks/modules/**/*.js'], scripts);
   watch('./src/resources/**', resources);
 }
 
