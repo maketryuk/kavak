@@ -77,19 +77,6 @@ const htmlInclude = () => {
     .pipe(browserSync.stream());
 }
 
-// Html Build //
-const htmlMinify = () => {
-	return src('./src/pages/**/*.html')
-    .pipe(fileinclude({
-      prefix: '@',
-      basepath: '@file'
-    }))
-		.pipe(htmlmin({
-			collapseWhitespace: true
-		}))
-		.pipe(dest('./app'));
-}
-
 // Scripts =====> //
 const scripts = () => {
   src('./src/js/libs/**.js')
@@ -98,7 +85,6 @@ const scripts = () => {
 		.pipe(dest('./app/js/'))
   return src([
     './src/js/main.js',
-    './src/blocks/_blocks.js',
     './src/blocks/modules/**/*.js',
     './src/blocks/components/**/*.js'
   ])
@@ -138,7 +124,6 @@ const scriptsBackend = () => {
 		.pipe(dest('./app/js/'))
   return src([
     './src/js/main.js',
-    './src/blocks/_blocks.js',
     './src/blocks/modules/**/*.js',
     './src/blocks/components/**/*.js'
   ])
@@ -175,7 +160,6 @@ const scriptsBuild = () => {
 		.pipe(dest('./app/js/'))
   return src([
     './src/js/main.js',
-    './src/blocks/_blocks.js',
     './src/blocks/modules/**/*.js',
     './src/blocks/components/**/*.js'
   ])
@@ -210,7 +194,7 @@ const imgToApp = () => {
     './src/img/**/*.jpg',
     './src/img/**/*.png',
     './src/img/**/*.webp',
-    './src/img/**/*.icon',
+    './src/img/**/*.ico',
     './src/img/**/*.gif',
     './src/img/**/*.jpeg',
     './src/img/**/*.svg',
@@ -224,7 +208,7 @@ const imgOptimize = () => {
     './src/img/**/*.jpg',
     './src/img/**/*.png',
     './src/img/**/*.webp',
-    './src/img/**/*.icon',
+    './src/img/**/*.ico',
     './src/img/**/*.gif',
     './src/img/**/*.jpeg',
     './src/img/**/*.svg',
@@ -235,11 +219,7 @@ const imgOptimize = () => {
 
 // Fonts =====> //
 const fonts = () => {
-  src('./src/fonts/**.ttf')
-    .pipe(ttf2woff())
-    .pipe(dest('./app/fonts/'))
-  return src('./src/fonts/**.ttf')
-    .pipe(ttf2woff2())
+  return src('./src/fonts/**/*')
     .pipe(dest('./app/fonts/'))
 }
 
@@ -266,15 +246,15 @@ const watchFiles = () => {
 
   watch(['./src/scss/**/*.scss', './src/blocks/_blocks.scss', './src/blocks/**/*.scss'], styles);
   watch(['./src/pages/*.html', './src/blocks/**/*.html'], htmlInclude);
-  watch('./src/img/**/*.{jpg, png, webp, ico, gif, jpeg, svg}', imgToApp);
-  watch('./src/fonts/**.ttf', fonts);
-  watch(['./src/js/main.js', './src/js/vendor.js', './src/blocks/_blocks.js', './src/blocks/components/**/*.js', './src/blocks/modules/**/*.js'], scripts);
+  watch(['./src/img/**/*.jpg', './src/img/**/*.png', './src/img/**/*.webp', './src/img/**/*.ico', './src/img/**/*.gif', './src/img/**/*.jpeg', './src/img/**/*.svg'], imgToApp);
+  watch('./src/fonts/**/*', fonts);
+  watch(['./src/js/main.js', './src/blocks/components/**/*.js', './src/blocks/modules/**/*.js'], scripts);
   watch('./src/resources/**', resources);
 }
 
 
 exports.default = series(clean, parallel(htmlInclude, scripts, fonts, imgToApp, resources), styles, watchFiles);
 
-exports.build = series(clean, parallel(htmlMinify, scriptsBuild, fonts, imgToApp, resources), stylesBuild, imgOptimize);
+exports.build = series(clean, parallel(htmlInclude, scriptsBuild, fonts, imgToApp, resources), stylesBuild, imgOptimize);
 
 exports.backend = series(clean, parallel(htmlInclude, scriptsBackend, stylesBackend, fonts, imgToApp, imgOptimize, resources));
