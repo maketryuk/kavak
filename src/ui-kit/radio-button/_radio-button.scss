@@ -1,0 +1,30 @@
+// Radio Button //
+$radio-button-color: rgb(0, 0, 0);
+$radio-button-bg: rgb(255, 255, 255);
+$radio-button-bg-active: rgb(255, 255, 0);
+$radio-button-borger: 1px solid rgb(0, 0, 0);
+$radio-border-radius: 20px;
+
+$radio-button-width: fit-content;
+$radio-button-padding: 20px 25px;
+$radio-button-margin: 20px 25px;
+
+.radio-container {
+  margin:$radio-button-margin;
+  input[type="radio"] {
+    display:none;
+  }
+  label {
+    display: block;
+    padding: $radio-button-padding;
+    width: $radio-button-width;
+    background-color: $radio-button-bg;
+    border: $radio-button-borger;
+    border-radius: $radio-border-radius;
+    cursor: pointer;
+  }
+  input[type="radio"]:checked + label {
+    background-color: $radio-button-bg-active;
+    color: $radio-button-color;
+  }
+}

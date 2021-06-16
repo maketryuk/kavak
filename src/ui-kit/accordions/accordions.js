@@ -1,8 +1,10 @@
-$(function () {
-  // $('.accordions__title:first').css('display', 'block');
-  $('.accordions__title').click(function () {
-      $(this).next().slideToggle(300);
-      $(this).toggleClass('accordions__title--active');
-      $('.accordions__content').not($(this).next()).slideUp(300);
+$(function() {
+  $('.accordion__header').click(function() {
+        
+    $(".accordion__body").not($(this).next()).slideUp(400);
+    $(this).next().slideToggle(400);
+    
+    $(".accordion__item").not($(this).closest(".accordion__item")).removeClass("accordion-active");
+    $(this).closest(".accordion__item").toggleClass("accordion-active");
   });
 });
