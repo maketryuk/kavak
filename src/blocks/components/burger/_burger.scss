@@ -1,0 +1,82 @@
+// Burger //
+$burger-bg: rgb(255, 255, 255);
+$burger-line-color: rgb(0, 0, 0);
+
+$burger-width: 30px;
+$burger-height: 30px;
+$burger-border: none;
+$burger-padding: 0;
+$burger-transition: 0.3s;
+
+$burger-line-width: 100%;
+$burger-line-height: 2px;
+$burger-line-top: 50%;
+$burger-line-left: 0;
+$burger-line-translate: translate(0, -50%);
+
+$burger-line-before-width: 100%;
+$burger-line-before-top: 0;
+$burger-line-before-left: 0;
+$burger-line-before-translate: translate(0, 0);
+
+$burger-line-after-width: 100%;
+$burger-line-after-bottom: 0;
+$burger-line-after-left: 0;
+$burger-line-after-translate: translate(0, 0);
+
+@mixin burger {
+  position: relative;
+  border: $burger-border;
+  padding: $burger-padding;
+  width: $burger-width;
+  height: $burger-height;
+  color: $burger-line-color;
+  background-color: $burger-bg;
+  cursor: pointer;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    height: $burger-line-height;
+    background-color: currentColor;
+    transition: transform $burger-transition ease-in-out, top $burger-transition ease-in-out;
+  }
+  &::before {
+    width: $burger-line-before-width;
+    left: $burger-line-before-left;
+    top: $burger-line-before-top;
+    transform: $burger-line-before-translate;
+  }
+  &::after {
+    width: $burger-line-after-width;
+    left: $burger-line-after-left;
+    bottom: $burger-line-after-bottom;
+    transform: $burger-line-after-translate;
+  }
+  &__line {
+    position: absolute;
+    left: $burger-line-left;
+    top: $burger-line-top;
+    width: $burger-line-width;
+    height: $burger-line-height;
+    background-color: currentColor;
+    transform: $burger-line-translate;
+    transition: transform $burger-transition ease-in-out;
+  }
+  &--active {
+    &::before {
+      top: 50%;
+      transform: rotate(45deg);
+      transition: transform $burger-transition ease-in-out, $burger-transition ease-in-out;
+    }
+    &::after {
+      top: 50%;
+      transform: rotate(-45deg);
+      transition: transform $burger-transition ease-in-out, top $burger-transition ease-in-out;
+    }
+    .burger__line {
+      transform: scale(0);
+      transition: transform $burger-transition ease-in-out;
+    }
+  }
+}
