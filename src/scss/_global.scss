@@ -1,0 +1,66 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "ask", sans-serif;
+  background-color: $color-background;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.site-container {
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+.is-visible {
+  display: block;
+}
+
+.lock {
+  overflow: hidden;
+}
+
+.btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.container {
+  max-width: 1640px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+// Custom //
