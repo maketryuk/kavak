@@ -7,15 +7,12 @@ const cleanCSS = require('gulp-clean-css');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const fileinclude = require('gulp-file-include');
-const htmlmin = require('gulp-htmlmin');
-const ttf2woff = require('gulp-ttf2woff');
-const ttf2woff2 = require('gulp-ttf2woff2');
 const image = require('gulp-image');
 const del = require('del');
-const webpack = require('webpack');
-const webpackStream = require('webpack-stream');
 const uglify = require('gulp-uglify-es').default;
 const concat = require('gulp-concat');
+const gcmq = require('gulp-group-css-media-queries');
+const babel = require('gulp-babel');
 
 // Styles =====> //
 const styles = () => {
@@ -24,15 +21,10 @@ const styles = () => {
     .pipe(sass({
       outputStyle: 'expanded'
     }).on('error', notify.onError()))
-    .pipe(rename({
-      suffix: '.min'
-    }))
     .pipe(autoprefixer({
       cascade: false,
     }))
-    .pipe(cleanCSS({
-      level: 2
-    }))
+    .pipe(gcmq())
     .pipe(sourcemaps.write('.'))
     .pipe(dest('./app/css/'))
     .pipe(browserSync.stream());
@@ -45,6 +37,7 @@ const stylesBackend = () => {
     .pipe(autoprefixer({
       cascade: false,
 		}))
+    .pipe(gcmq())
 		.pipe(dest('./app/css/'))
 };
 
@@ -60,6 +53,7 @@ const stylesBuild = () => {
     .pipe(autoprefixer({
       cascade: false,
     }))
+    .pipe(gcmq())
     .pipe(cleanCSS({
       level: 2
     }))
@@ -81,36 +75,17 @@ const htmlInclude = () => {
 const scripts = () => {
   src('./src/js/libs/**.js')
 		.pipe(concat('vendor.js'))
-		.pipe((uglify().on("error", notify.onError())))
 		.pipe(dest('./app/js/'))
   return src([
     './src/js/main.js',
     './src/blocks/modules/**/*.js',
     './src/blocks/components/**/*.js'
   ])
-    .pipe(webpackStream({
-      output: {
-        filename: 'main.js'
-      },
-      module: {
-        rules: [
-          {
-            test: /\.m?js$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['@babel/preset-env', { targets: "defaults" }]
-                ]
-              }
-            }
-          }
-        ]
-      }
+    .pipe(babel({
+      presets: ['@babel/env']
     }))
+    .pipe(concat('main.js'))
     .pipe(sourcemaps.init())
-    .pipe(uglify().on("error", notify.onError()))
     .pipe(sourcemaps.write('.'))
     .pipe(dest('./app/js'))
     .pipe(browserSync.stream())
@@ -120,35 +95,16 @@ const scripts = () => {
 const scriptsBackend = () => {
 	src('./src/js/libs/**.js')
     .pipe(concat('vendor.js'))
-    .pipe(uglify().on("error", notify.onError()))
 		.pipe(dest('./app/js/'))
   return src([
     './src/js/main.js',
     './src/blocks/modules/**/*.js',
     './src/blocks/components/**/*.js'
   ])
-    .pipe(webpackStream({
-      output: {
-        filename: 'main.js'
-      },
-      mode: 'none',
-      module: {
-        rules: [
-          {
-            test: /\.m?js$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['@babel/preset-env', { targets: "defaults" }]
-                ]
-              }
-            }
-          }
-        ]
-      }
+    .pipe(babel({
+      presets: ['@babel/env']
     }))
+    .pipe(concat('main.js'))
     .pipe(dest('./app/js'))
 };
 
@@ -163,27 +119,10 @@ const scriptsBuild = () => {
     './src/blocks/modules/**/*.js',
     './src/blocks/components/**/*.js'
   ])
-    .pipe(webpackStream({
-      output: {
-        filename: 'main.js'
-      },
-      module: {
-        rules: [
-          {
-            test: /\.m?js$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['@babel/preset-env', { targets: "defaults" }]
-                ]
-              }
-            }
-          }
-        ]
-      }
+    .pipe(babel({
+      presets: ['@babel/env']
     }))
+    .pipe(concat('main.js'))
     .pipe(uglify().on("error", notify.onError()))
     .pipe(dest('./app/js'))
 }
@@ -253,8 +192,8 @@ const watchFiles = () => {
 }
 
 
-exports.default = series(clean, parallel(htmlInclude, scripts, fonts, imgToApp, resources), styles, watchFiles);
+exports.default = series(clean, parallel(htmlInclude, scripts, fonts, imgToApp, imgOptimize, resources), styles, watchFiles);
 
-exports.build = series(clean, parallel(htmlInclude, scriptsBuild, fonts, imgToApp, resources), stylesBuild, imgOptimize);
+exports.build = series(clean, parallel(htmlInclude, scriptsBuild, fonts, imgToApp, imgOptimize, resources), stylesBuild, imgOptimize);
 
 exports.backend = series(clean, parallel(htmlInclude, scriptsBackend, stylesBackend, fonts, imgToApp, imgOptimize, resources));
