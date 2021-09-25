@@ -192,7 +192,7 @@ const watchFiles = () => {
 }
 
 
-exports.default = series(clean, parallel(htmlInclude, scripts, fonts, imgToApp, imgOptimize, resources), styles, watchFiles);
+exports.default = series(clean, parallel(htmlInclude, scripts, fonts, imgToApp, resources), styles, watchFiles);
 
 exports.build = series(clean, parallel(htmlInclude, scriptsBuild, fonts, imgToApp, imgOptimize, resources), stylesBuild, imgOptimize);
 
