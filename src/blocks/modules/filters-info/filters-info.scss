@@ -1,0 +1,51 @@
+.filters {
+  &-info {
+    flex: 0 0 24%;
+    max-width: 24%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 16px 10px 16px 0;
+    background: $color-white;
+    z-index: 47;
+    position: sticky;
+    top: 230px;
+    right: 0;
+  }
+  &__trigger {
+    display: flex;
+    align-items: center;
+    span {
+      color: $color-text;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-left: 8px;
+    }
+    kavak-svg {
+      &::before {
+        display: none;
+      }
+    }
+  }
+  &__reset {
+    color: #898989;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Media 991px //
+@media screen and (max-width: 991px) {
+  .filters {
+    position: relative;
+    top: 0;
+    &-info {
+      display: none;
+    }
+  }
+}

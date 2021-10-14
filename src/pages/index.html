@@ -11,14 +11,31 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <!--===== Header =====-->
-  @include('../blocks/modules/header/header.html')
-  <main class="main">
-    <!--===== Hero =====-->
-  @include('../blocks/modules/hero/hero.html')
-  </main>
-  <!--===== Footer =====-->
-  @include('../blocks/modules/footer/footer.html')
+  <div class="site-container">
+    <div class="overlay"></div>
+    <!--===== Header =====-->
+    @include('../blocks/modules/header/header.html')
+    <main class="main">
+      <div class="container">
+        <!--===== Hero =====-->
+        @include('../blocks/modules/hero/hero.html')
+        <!--===== Filters-info =====-->
+        @include('../blocks/modules/filters-info/filters-info.html')
+        <!--===== Sort =====-->
+        @include('../blocks/modules/sort/sort.html')
+        <!--===== Filters =====-->
+        @include('../blocks/modules/filters/filters.html')
+        <!--===== Product =====-->
+        @include('../blocks/modules/product/product.html')
+      </div>
+      <!--===== Recomendations =====-->
+      @include('../blocks/modules/recomendations/recomendations.html')
+      <!--===== Info =====-->
+      @include('../blocks/modules/info/info.html')
+    </main>
+    <!--===== Footer =====-->
+    @include('../blocks/modules/footer/footer.html')
+  </div>
   <!-- Link Scripts -->
   <script src="js/vendor.js"></script>
   <script src="js/main.js"></script>

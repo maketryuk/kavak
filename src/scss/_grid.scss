@@ -71,7 +71,7 @@ $breakpoint-xxl: 1800px;
   @for $i from 1 through 12 {
     .col-sm-#{$i} {
       @include grid-size(8.333333% * $i);
-      padding: 0 20px;
+      padding: 20px;
     }
   }
 }
@@ -80,7 +80,7 @@ $breakpoint-xxl: 1800px;
   @for $i from 1 through 12 {
     .col-md-#{$i} {
       @include grid-size(8.333333% * $i);
-      padding: 0 20px;
+      padding: 20px;
     }
   }
 }
@@ -114,27 +114,10 @@ $breakpoint-xxl: 1800px;
   }
 }
 
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 15px;
-  @media (max-width: 1400px) {
-    max-width: 1120px;
-  }
-}
-
-.container-fluid {
-  width: 100%;
-  padding-right: 20px;
-  padding-left: 20px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
 .row {
   display: flex;
   flex-flow: row wrap;
-  margin: 0 -15px;
+  margin: 0 -20px;
 }
 .m-row {
   display: flex;
@@ -154,6 +137,9 @@ $breakpoint-xxl: 1800px;
 }
 .p-0 {
   padding: 0;
+}
+.p-20 {
+  padding: 20px;
 }
 .ml-auto {
   margin-left: auto;

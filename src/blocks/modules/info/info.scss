@@ -1,0 +1,19 @@
+.info {
+  padding: 64px 0 24px;
+  h2 {
+    margin-bottom: 24px;
+  }
+  p {
+    color: $color-black;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+}
+
+// Media 575px //
+@media screen and (max-width: 575px) {
+  .info {
+    padding: 64px 16px 24px;
+  }
+}
